@@ -73,7 +73,7 @@ app.post('/api/users', async function(req, res) {
 
 app.post('/api/users/:_id/exercises', async function(req, res) {
 
-	const id = req.body[':_id'];
+	const id = req.body['_id'];
 
 	console.log(id)
 
