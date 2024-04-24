@@ -36,7 +36,7 @@ app.use(cors())
 app.use(bodyParser({ type: 'application/*+json' }))
 app.use(express.static('public'))
 
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
 	console.log(req.originalUrl)
 	next()
 })
@@ -46,9 +46,9 @@ app.get('/', (req, res) => {
 });
 
 
-app.get('/api/users',async function(req,res){
+app.get('/api/users', async function(req, res) {
 	let users = await userModel.find()
-	users = users.map(user=>({_id:user._id,username: user.userName}))
+	users = users.map(user => ({ _id: user._id, username: user.userName }))
 	res.json(users)
 })
 
@@ -90,7 +90,7 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 	try {
 
 		let userData = await userModel.findById(id)
-		let findUser = null
+		let userAdded = null
 		if (!isNull(userData)) {
 			const userDetails = await userModel.findById(id)
 			if (isNull(userDetails)) {
@@ -98,7 +98,7 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 			} else {
 				findUser = await exerciseModel.findOne({ userId: id })
 				if (isNull(findUser)) {
-					findUser = exerciseModel.create({
+					userAdded = exerciseModel.create({
 						userId: id,
 						userName: userData.userName,
 						logs: [
@@ -113,8 +113,16 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 					})
 					await findUser.save()
 				}
+				res.json(
+					{
+						username: description,
+						description: description,
+						duration: duration,
+						date: (date ? date : new Date()),
+						_id: id
+					}
+				)
 			}
-		res.json(findUser)
 		} else {
 			res.json({ error: 'user name does not excists.' })
 		}
@@ -170,7 +178,7 @@ app.get("/api/users/:_id/logs", async function(req, res) {
 			'message': 'logs are unavailable'
 		})
 	}
-	
+
 })
 
 
