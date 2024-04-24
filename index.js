@@ -113,13 +113,12 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 					})
 					await findUser.save()
 				}
-				let user = await exerciseModel.findOne({ userId: id })
+				let addedUser = await exerciseModel.findOne({ userId: id })
 				res.json({
-			username: user.userName,
-			count: user.length,
-			_id: user.userId,
-			exercise: user.logs,
-
+					username: addedUser.userName,
+					count: addedUser.length,
+					_id: addedUser.userId,
+					exercise: addedUser.logs
 				})
 			}
 		} else {
