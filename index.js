@@ -80,12 +80,14 @@ app.get("/api/users/:_id/exercises", async function(req, res) {
 app.post("/api/users/:_id/exercises", async function(req, res) {
 	const id = req.params['_id'];
 	const description = req.body.description;
-	const duration = parseFloat(req.body.duration);
-	let date = Date.parse(req.body.date)
-	if (date === NaN) date = new Date()
 
 	// validation 
-	if (!isNumber(duration)) res.json({ message: 'Duration should be in mins' })
+	let date = Date.parse(req.body.date)
+	if (!(date instanceof Date)){ date = new Date()}
+
+	const duration = parseFloat(req.body.duration);
+	if (Number.isNaN(duration)) {res.json({ message: 'Duration should be in mins' })}
+
 
 	try {
 
@@ -113,17 +115,13 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 					})
 					await findUser.save()
 				}
-				let addedUser = await exerciseModel.findOne({ userId: id })
-				if (addedUser) {
-					res.json({
-						username: addedUser.userName,
-						count: addedUser.length,
-						_id: addedUser.userId,
-						exercise: addedUser.logs
-					})
-				} else {
-					res.send({ message: 'error' })
-				}
+				res.send({
+					_id: id,
+					username: userData.userName,
+					description: description,
+					duration: duration,
+					date: date,
+				})
 			}
 		} else {
 			res.json({ error: 'user name does not excists.' })
