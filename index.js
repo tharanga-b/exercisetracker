@@ -81,12 +81,6 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 	const id = req.params['_id'];
 	const description = req.body.description;
 
-	// validation 
-	/* let date = Date.parse(req.body.date)*/
-	/*if (!(date instanceof Date)) { date = new Date() }*/
-
-	/*const duration = parseFloat(req.body.duration);*/
-	/*if (Number.isNaN(duration)) { res.json({ message: 'Duration should be in mins' }) }*/
 	const duration = parseFloat(req.body.duration);
 	let date = Date.parse(req.body.date)
 
@@ -105,9 +99,9 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 			if (isNull(userDetails)) {
 				res.json({ message: "user doesn't excists" })
 			} else {
-				findUser = await exerciseModel.findOne({ userId: id })
+				let findUser = await exerciseModel.findOne({ userId: id })
 				if (isNull(findUser)) {
-					userAdded = exerciseModel.create({
+					await exerciseModel.create({
 						userId: id,
 						userName: userData.userName,
 						logs: [
@@ -124,6 +118,7 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 				}
 				let addedUser = await exerciseModel.findOne({ userId: id })
 				if (addedUser) {
+					console.log('send',{ _id: addedUser.userId,count: addedUser.logs.length, username: addedUser.userName, date: date? new Date(date).toDateString() :new Date().toDateString(), duration: Number(duration), description: description });
 					res.json({ _id: addedUser.userId,count: addedUser.logs.length, username: addedUser.userName, date: date? new Date(date).toDateString() :new Date().toDateString(), duration: Number(duration), description: description });
 				} else {
 					res.send({ message: 'error' })
