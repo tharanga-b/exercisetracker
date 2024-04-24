@@ -90,12 +90,13 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 	try {
 
 		let userData = await userModel.findById(id)
+		let findUser = null
 		if (!isNull(userData)) {
 			const userDetails = await userModel.findById(id)
 			if (isNull(userDetails)) {
 				res.json({ message: "user doesn't excists" })
 			} else {
-				let findUser = await exerciseModel.findOne({ userId: id })
+				findUser = await exerciseModel.findOne({ userId: id })
 				if (isNull(findUser)) {
 					findUser = exerciseModel.create({
 						userId: id,
