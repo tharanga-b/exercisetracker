@@ -71,12 +71,14 @@ app.post('/api/users', async function(req, res) {
 	}
 })
 
-app.post('/api/users/:_id/exercises', async function(req, res) {
+app.get("/api/users/:_id/exercises", async function(req, res) {
+	const id = req.params._id
+	let user = await exerciseModel.findOne({ userId: id })
+	res.json(user)
+});
 
-	const id = req.body['_id'];
-
-	console.log(id)
-
+app.post("/api/users/:_id/exercises", async function(req, res) {
+	const id = req.params['_id'];
 	const description = req.body.description;
 	const duration = parseFloat(req.body.duration);
 	let date = Date.parse(req.body.date)
