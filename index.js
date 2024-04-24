@@ -114,12 +114,16 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 					await findUser.save()
 				}
 				let addedUser = await exerciseModel.findOne({ userId: id })
-				res.json({
-					username: addedUser.userName,
-					count: addedUser.length,
-					_id: addedUser.userId,
-					exercise: addedUser.logs
-				})
+				if (addUser) {
+					res.json({
+						username: addedUser.userName,
+						count: addedUser.length,
+						_id: addedUser.userId,
+						exercise: addedUser.logs
+					})
+				} else {
+					res.send({ message: 'error' })
+				}
 			}
 		} else {
 			res.json({ error: 'user name does not excists.' })
@@ -135,7 +139,6 @@ app.get("/api/users/:_id/logs", async function(req, res) {
 	let id = req.params._id;
 	let { from, to, limit } = req.query;
 	const data = await exerciseModel.findOne({ userId: id });
-	console.log(data)
 	let { logs } = data;
 	if (data) {
 		if (to) {
