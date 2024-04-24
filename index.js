@@ -82,12 +82,17 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 	const description = req.body.description;
 
 	// validation 
+       /* let date = Date.parse(req.body.date)*/
+	/*if (!(date instanceof Date)) { date = new Date() }*/
+
+	/*const duration = parseFloat(req.body.duration);*/
+	/*if (Number.isNaN(duration)) { res.json({ message: 'Duration should be in mins' }) }*/
+const duration = parseFloat(req.body.duration);
 	let date = Date.parse(req.body.date)
-	if (!(date instanceof Date)) { date = new Date() }
+	if (date === NaN) date = new Date()
 
-	const duration = parseFloat(req.body.duration);
-	if (Number.isNaN(duration)) { res.json({ message: 'Duration should be in mins' }) }
-
+	// validation 
+	if (!isNumber(duration)) res.json({ message: 'Duration should be in mins' })
 
 	try {
 
