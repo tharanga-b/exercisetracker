@@ -114,7 +114,7 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 					await findUser.save()
 				}
 				let addedUser = await exerciseModel.findOne({ userId: id })
-				if (addUser) {
+				if (addedUser) {
 					res.json({
 						username: addedUser.userName,
 						count: addedUser.length,
