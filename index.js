@@ -120,10 +120,9 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 					})
 					await findUser.save()
 				}
-				
 				let addedUser = await exerciseModel.findOne({ userId: id })
 				if (addedUser) {
-					res.json({ _id: addedUser.userId, username: addedUser.userName, date: date? date.toDateString() :new Date().toDateString(), duration: Number(duration), description: description });
+					console.log({ _id: addedUser.userId,count: addedUser.length, username: addedUser.userName, date: date? date.toDateString() :new Date().toDateString(), duration: Number(duration), description: description });
 				} else {
 					res.send({ message: 'error' })
 				}
