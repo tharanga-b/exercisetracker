@@ -119,6 +119,7 @@ app.get("/api/users/:_id/logs", async function(req, res) {
 	let id = req.params._id;
 	let { from, to, limit } = req.query;
 	const data = await exerciseModel.findOne({ userId: id });
+	console.log(data)
 	let { logs } = data;
 	if (data) {
 		if (to) {
