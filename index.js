@@ -43,7 +43,8 @@ app.get('/', (req, res) => {
 
 app.get('/api/users',async function(req,res){
 	let users = await userModel.find()
-	users = users.map(user=>({_id:user._id,username: user.userName}))
+	console.log(users)
+	//users = users.map(user=>({_id:user._id,username: user.userName}))
 	res.json(users)
 })
 
