@@ -121,13 +121,15 @@ const duration = parseFloat(req.body.duration);
 					await findUser.save()
 				}
 				let addedUser = await exerciseModel.findOne({ userId: id })
-			       /* res.send({*/
-					/*_id: id,*/
-					/*username: userData.userName,*/
-					/*description: description,*/
-					/*duration: duration,*/
-					/*date: date,*/
-				/*})*/
+				if (addedUser) {
+					res.json({
+						username: addedUser.userName,
+						count: addedUser.length,
+						_id: addedUser.userId,
+					})
+				} else {
+					res.send({ message: 'error' })
+				}
 			}
 		} else {
 			res.json({ error: 'user name does not excists.' })
