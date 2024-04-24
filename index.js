@@ -89,10 +89,12 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 	/*if (Number.isNaN(duration)) { res.json({ message: 'Duration should be in mins' }) }*/
 	const duration = parseFloat(req.body.duration);
 	let date = Date.parse(req.body.date)
-	if (date === NaN) date = new Date()
+
+
+	if (Number.isNaN(date)) {date = new Date()}
 
 	// validation 
-	if (!isNumber(duration)) res.json({ message: 'Duration should be in mins' })
+	if (!Number.isInteger(duration)) res.json({ message: 'Duration should be in mins' })
 
 	try {
 
@@ -122,7 +124,7 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 				}
 				let addedUser = await exerciseModel.findOne({ userId: id })
 				if (addedUser) {
-					console.log({ _id: addedUser.userId,count: addedUser.logs.length, username: addedUser.userName, date: date? new Date(date).toDateString() :new Date().toDateString(), duration: Number(duration), description: description });
+					res.json({ _id: addedUser.userId,count: addedUser.logs.length, username: addedUser.userName, date: date? new Date(date).toDateString() :new Date().toDateString(), duration: Number(duration), description: description });
 				} else {
 					res.send({ message: 'error' })
 				}
