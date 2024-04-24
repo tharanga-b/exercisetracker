@@ -95,9 +95,9 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 			if (isNull(userDetails)) {
 				res.json({ message: "user doesn't excists" })
 			} else {
-				const findUser = await exerciseModel.findOne({ userId: id })
+				let findUser = await exerciseModel.findOne({ userId: id })
 				if (isNull(findUser)) {
-					exerciseModel.create({
+					findUser = exerciseModel.create({
 						userId: id,
 						userName: userData.userName,
 						logs: [
@@ -113,7 +113,7 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 					await findUser.save()
 				}
 			}
-			res.json({ message: 'Log has been created' })
+		res.json(findUser)
 		} else {
 			res.json({ error: 'user name does not excists.' })
 		}
