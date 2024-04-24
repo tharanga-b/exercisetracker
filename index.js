@@ -122,7 +122,7 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 				}
 				let addedUser = await exerciseModel.findOne({ userId: id })
 				if (addedUser) {
-					console.log({ _id: addedUser.userId,count: addedUser.length, username: addedUser.userName, date: date? new Date(date).toDateString() :new Date().toDateString(), duration: Number(duration), description: description });
+					console.log({ _id: addedUser.userId,count: addedUser.logs.length, username: addedUser.userName, date: date? new Date(date).toDateString() :new Date().toDateString(), duration: Number(duration), description: description });
 				} else {
 					res.send({ message: 'error' })
 				}
