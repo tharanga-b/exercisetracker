@@ -114,9 +114,13 @@ app.post("/api/users/:_id/exercises", async function(req, res) {
 					await findUser.save()
 				}
 				let user = await exerciseModel.findOne({ userId: id })
-				res.json(
-					user
-				)
+				res.json({
+			username: user.userName,
+			count: user.length,
+			_id: user.userId,
+			exercise: user.logs,
+
+				})
 			}
 		} else {
 			res.json({ error: 'user name does not excists.' })
