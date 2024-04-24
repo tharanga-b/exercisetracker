@@ -121,16 +121,6 @@ const duration = parseFloat(req.body.duration);
 					await findUser.save()
 				}
 				let addedUser = await exerciseModel.findOne({ userId: id })
-				if (addedUser) {
-					res.json({
-						username: addedUser.userName,
-						count: addedUser.length,
-						_id: addedUser.userId,
-						exercise: addedUser.logs
-					})
-				} else {
-					res.send({ message: 'error' })
-				}
 			       /* res.send({*/
 					/*_id: id,*/
 					/*username: userData.userName,*/
