@@ -88,7 +88,6 @@ app.post('/api/users/:_id/exercises', async function(req, res) {
 			} else {
 				const findUser = await exerciseModel.findOne({ userId: id })
 				if (isNull(findUser)) {
-					console.log(date)
 					exerciseModel.create({
 						userId: id,
 						userName: userData.userName,
