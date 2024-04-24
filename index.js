@@ -74,6 +74,9 @@ app.post('/api/users', async function(req, res) {
 app.post('/api/users/:_id/exercises', async function(req, res) {
 
 	const id = req.body[':_id'];
+
+	console.log(id)
+
 	const description = req.body.description;
 	const duration = parseFloat(req.body.duration);
 	let date = Date.parse(req.body.date)
